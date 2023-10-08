@@ -7,7 +7,6 @@ using namespace std;
 int main()
 {
 	cout << "Recursive Binary Search Example" << endl;
-
 	OrderedArray<int> array(3);
 	
 	array.push(3);
@@ -16,7 +15,7 @@ int main()
 	array.push(23);
 	array.push(82);
 	array.push(1);
-	array.push(89);
+	array.push(83);
 	array.push(30);
 	array.push(100);
 	array.push(45);

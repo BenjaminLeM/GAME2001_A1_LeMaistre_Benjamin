@@ -1,14 +1,9 @@
 ﻿  GAME2001_A1_LeMaistre_Benjamin.cpp
-C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\Arrays.h(131,2): error C2512: 'Array<T>': no appropriate default constructor available
-          with
-          [
-              T=int
-          ]
-C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\Arrays.h(125,29): message : see declaration of 'Array<T>'
-          with
-          [
-              T=int
-          ]
-C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\Arrays.h(129,2): message : while compiling class template member function 'OrderedArray<int>::OrderedArray(int,int)'
-C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin.cpp(11,25): message : see the first reference to 'OrderedArray<int>::OrderedArray' in 'main'
-C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin.cpp(11,20): message : see reference to class template instantiation 'OrderedArray<int>' being compiled
+C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin.cpp(10,25): error C2665: 'OrderedArray<int>::OrderedArray': no overloaded function could convert all the argument types
+C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\Arrays.h(249,1): message : could be 'OrderedArray<int>::OrderedArray(OrderedArray<int> &&)'
+C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin.cpp(10,25): message : 'OrderedArray<int>::OrderedArray(OrderedArray<int> &&)': cannot convert argument 1 from 'int' to 'OrderedArray<int> &&'
+C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin.cpp(10,26): message : Reason: cannot convert from 'int' to 'OrderedArray<int>'
+C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\Arrays.h(249,1): message : or       'OrderedArray<int>::OrderedArray(const OrderedArray<int> &)'
+C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin.cpp(10,25): message : 'OrderedArray<int>::OrderedArray(const OrderedArray<int> &)': cannot convert argument 1 from 'int' to 'const OrderedArray<int> &'
+C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin.cpp(10,26): message : Reason: cannot convert from 'int' to 'const OrderedArray<int>'
+C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin.cpp(10,25): message : while trying to match the argument list '(int)'

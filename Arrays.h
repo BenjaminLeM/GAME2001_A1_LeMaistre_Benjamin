@@ -85,6 +85,11 @@ public:
 		assert(val >= 0);
 		m_growSize = val;
 	}
+	int SetSize(int val)
+	{
+		assert(val >= 0);
+		m_numElements = val;
+	}
 private:
 	bool Expand()
 	{
@@ -125,44 +130,22 @@ template <class T>
 class OrderedArray : public Array<T>
 {
 public:
-	//Constructor
-	OrderedArray(int size, int growBy = 1) :
-		m_array(NULL), m_maxSize(0), m_growSize(0), m_numElements(0)
-	{
-		if (size)	// Is this a legal size for an array?
-		{
-			m_maxSize = size;
-			m_array = new T[m_maxSize];		// Dynamically allocating an array to m_maxSize
-			memset(m_array, 0, sizeof(T) * m_maxSize);	// Explicitly set 0 to all elements in the array
-
-			m_growSize = ((growBy > 0) ? growBy : 0);
-		}
-	}
-	// Destructor
-	~OrderedArray()
-	{
-		if (m_array != nullptr)
-		{
-			delete[] m_array;
-			m_array = nullptr;
-		}
-	}
 	void push(T val)
 	{
 		//	checks if val is already in the array 
 		//	if not then it pushing it into the array
-		if (val != binarySearch(val, 0, m_numElements - 1)) {
+		if (val != binarySearch(val, 0, Array<int>::GetSize() - 1)) {
 
-			assert(m_array != nullptr);
+			assert(T & operator() != nullptr);
 
-			if (m_numElements >= m_maxSize)
+			if (Array<int>::GetSize() >= Array<int>::GetMaxSize())
 			{
 				Expand();
 			}
 
 			int i, k;	// i - Index to be inserted. k - Used for shifting purposes
 			// Step 1: Find the index to insert val
-			for (i = 0; i < m_numElements; i++)
+			for (i = 0; i < Array<int>::GetSize(); i++)
 			{
 				if (m_array[i] > val)
 				{
@@ -171,7 +154,7 @@ public:
 			}
 
 			// Step 2: Shift everything to the right of the index(i) forward by one. Work backwards
-			for (k = m_numElements; k > i; k--)
+			for (k = Array<int>::GetSize(); k > i; k--)
 			{
 				m_array[k] = m_array[k - 1];
 			}
@@ -179,7 +162,7 @@ public:
 			// Step 3: Insert val into the array at index
 			m_array[i] = val;
 
-			m_numElements++;
+			Array<int>::SetSize(Array<int>::GetSize()+1);
 
 			// return i;
 		}
@@ -190,7 +173,7 @@ public:
 	{
 		// Call to binary search recursive function
 		// Binary Search: searchKey, initial lowerBound, initial upperBound
-		return binarySearch(searchKey, 0, m_numElements - 1);
+		return binarySearch(searchKey, 0, Array<int>::GetSize() - 1);
 	}
 private:
 	// Private functions
@@ -199,7 +182,7 @@ private:
 	{
 		assert(m_array != nullptr);
 		assert(lowerBound >= 0);
-		assert(upperBound < m_numElements);
+		assert(upperBound < Array<int>::GetSize());
 
 		// Bitwise divide by 2
 		int current = (lowerBound + upperBound) >> 1;
@@ -235,18 +218,18 @@ private:
 	}
 	bool Expand()
 	{
-		if (m_growSize <= 0)
+		if (Array<int>::GetGrowSize() <= 0)
 		{
 			// LEAVE!
 			return false;
 		}
 
 		// Create the new array
-		T* temp = new T[m_maxSize * pow(2, m_growSize)];
+		T* temp = new T[Array<int>::GetMaxSize() * pow(2, Array<int>::GetGrowSize())];
 		assert(temp != nullptr);
 
 		// Copy the contents of the original array into the new array
-		memcpy(temp, m_array, sizeof(T) * m_maxSize);
+		memcpy(temp, m_array, sizeof(T) * Array<int>::GetMaxSize());
 
 		// Delete the old array
 		delete[] m_array;
@@ -255,45 +238,20 @@ private:
 		m_array = temp;
 		temp = nullptr;
 
-		m_maxSize *= pow(2, m_growSize);
+		Array<int>::SetMaxSize(Array<int>::GetMaxSize() * pow(2, Array<int>::GetGrowSize()));
 
 		return true;
 	}
-private:
-	// Private Variables
-	T* m_array;			// Pointer to the beginning of the array
+	private:
+		// Private Variables
+		T* m_array;			// Pointer to the beginning of the array
 
-	int m_maxSize;		// Maximum size of the array
-	int m_growSize;		// Amount the array can grow through expansion
-	int m_numElements;	// Number of items currently in my array
 };
 
 template <class T>
 class UnorderedArray : public Array <T>
 {
 public:
-	//Constructor
-	UnorderedArray(int size, int growBy = 1) :
-		m_array(NULL), m_maxSize(0), m_growSize(0), m_numElements(0)
-	{
-		if (size)	// Is this a legal size for an array?
-		{
-			m_maxSize = size;
-			m_array = new T[m_maxSize];		// Dynamically allocating an array to m_maxSize
-			memset(m_array, 0, sizeof(T) * m_maxSize);	// Explicitly set 0 to all elements in the array
-
-			m_growSize = ((growBy > 0) ? growBy : 0);
-		}
-	}
-	// Destructor
-	~UnorderedArray()
-	{
-		if (m_array != nullptr)
-		{
-			delete[] m_array;
-			m_array = nullptr;
-		}
-	}
 	// Searching
 	// Linear Search
 	int search(T val)
@@ -301,7 +259,7 @@ public:
 		assert(m_array != nullptr);
 
 		// Brute-force Search
-		for (int i = 0; i < m_numElements; i++)
+		for (int i = 0; i < Array<int>::GetSize(); i++)
 		{
 			if (m_array[i] == val)
 			{
@@ -320,7 +278,7 @@ public:
 		T temp;
 
 		// Start at the end of the array and move backwards
-		for (int k = m_numElements - 1; k > 0; k--)
+		for (int k = Array<int>::GetSize() - 1; k > 0; k--)
 		{
 			for (int i = 0; i < k; i++)	 // Compare elements until k is reached
 			{
@@ -344,12 +302,12 @@ public:
 		int min = 0;	// Hold the index of the current smallest value
 
 		// The lowest position to swap elements into
-		for (int k = 0; k < m_numElements; k++)
+		for (int k = 0; k < Array<int>::GetSize(); k++)
 		{
 			min = k;	// Set the value at index k as a "default" minimum value
 
 			// Iterate through the array to find smallest value, if there is one.
-			for (int i = k + 1; i < m_numElements; i++)
+			for (int i = k + 1; i < Array<int>::GetSize(); i++)
 			{
 				// Compare the value at the current index vs the current "min" index
 				if (m_array[i] < m_array[min])
@@ -373,12 +331,12 @@ public:
 	void InsertionSort()
 	{
 		assert(m_array != nullptr);
-
+		
 		T temp;
 		int i = 0;
 
 		// Iterate through all elements to be sorted starting with index of 1, increasing as more of the array is sorted
-		for (int k = 1; k < m_numElements; k++)
+		for (int k = 1; k < Array<int>::GetSize(); k++)
 		{
 			temp = m_array[k];
 			i = k;
@@ -401,10 +359,10 @@ public:
 	{
 		assert(m_array != nullptr);
 
-		T* tempArray = new T[m_numElements]; //create the temparray needed for mergesort
+		T* tempArray = new T[Array<int>::GetSize()]; //create the temparray needed for mergesort
 		assert(tempArray != nullptr);
 
-		MergeSort(tempArray, 0, m_numElements - 1);
+		MergeSort(tempArray, 0, Array<int>::GetSize() - 1);
 		delete[] tempArray;
 	}
 	private:
@@ -464,18 +422,18 @@ public:
 		}
 		bool Expand()
 	{
-		if (m_growSize <= 0)
+		if (Array<int>::GetGrowSize() <= 0)
 		{
 			// LEAVE!
 			return false;
 		}
 
 		// Create the new array
-		T* temp = new T[m_maxSize * pow(2, m_growSize)];
+		T* temp = new T[Array<int>::GetMaxSize() * pow(2, Array<int>::GetGrowSize())];
 		assert(temp != nullptr);
 
 		// Copy the contents of the original array into the new array
-		memcpy(temp, m_array, sizeof(T) * m_maxSize);
+		memcpy(temp, m_array, sizeof(T) * Array<int>::GetMaxSize());
 
 		// Delete the old array
 		delete[] m_array;
@@ -484,15 +442,11 @@ public:
 		m_array = temp;
 		temp = nullptr;
 
-		m_maxSize *= pow(2, m_growSize);
+		Array<int>::SetMaxSize(Array<int>::GetMaxSize() * pow(2, Array<int>::GetGrowSize()));
 
 		return true;
 	}
-private:
-	// Private Variables
-	T* m_array;			// Pointer to the beginning of the array
-
-	int m_maxSize;		// Maximum size of the array
-	int m_growSize;		// Amount the array can grow through expansion
-	int m_numElements;	// Number of items currently in my array
+		private:
+			// Private Variables
+			T* m_array;			// Pointer to the beginning of the array
 };
