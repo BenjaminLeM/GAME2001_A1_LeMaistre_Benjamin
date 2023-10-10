@@ -1,9 +1,8 @@
 ﻿  GAME2001_A1_LeMaistre_Benjamin.cpp
-C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin.cpp(10,25): error C2665: 'OrderedArray<int>::OrderedArray': no overloaded function could convert all the argument types
-C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\Arrays.h(249,1): message : could be 'OrderedArray<int>::OrderedArray(OrderedArray<int> &&)'
-C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin.cpp(10,25): message : 'OrderedArray<int>::OrderedArray(OrderedArray<int> &&)': cannot convert argument 1 from 'int' to 'OrderedArray<int> &&'
-C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin.cpp(10,26): message : Reason: cannot convert from 'int' to 'OrderedArray<int>'
-C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\Arrays.h(249,1): message : or       'OrderedArray<int>::OrderedArray(const OrderedArray<int> &)'
-C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin.cpp(10,25): message : 'OrderedArray<int>::OrderedArray(const OrderedArray<int> &)': cannot convert argument 1 from 'int' to 'const OrderedArray<int> &'
-C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin.cpp(10,26): message : Reason: cannot convert from 'int' to 'const OrderedArray<int>'
-C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin.cpp(10,25): message : while trying to match the argument list '(int)'
+C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\Arrays.h(109,29): warning C4244: 'initializing': conversion from 'double' to 'size_t', possible loss of data
+C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\Arrays.h(100,7): message : while compiling class template member function 'bool Array<int>::Expand(void)'
+C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\Arrays.h(177,11): message : see the first reference to 'Array<int>::Expand' in 'OrderedArray<int>::push'
+C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin.cpp(12,12): message : see the first reference to 'OrderedArray<int>::push' in 'main'
+C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\Arrays.h(151,1): message : see reference to class template instantiation 'Array<int>' being compiled
+C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\GAME2001_A1_LeMaistre_Benjamin\Arrays.h(279,2): message : see reference to class template instantiation 'OrderedArray<T>' being compiled
+  GAME2001_A1_LeMaistre_Benjamin.vcxproj -> C:\Users\benpl\OneDrive\Desktop\GAME2001_A1_LeMaistre_Benjamin\x64\Debug\GAME2001_A1_LeMaistre_Benjamin.exe

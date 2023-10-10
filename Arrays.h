@@ -7,6 +7,7 @@ class Array
 {
 
 public:
+	Array() = default;
 	//Constructor
 	Array(int size, int growBy = 1) :
 		m_array(NULL), m_maxSize(0), m_growSize(0), m_numElements(0)
@@ -80,17 +81,22 @@ public:
 	{
 		return m_growSize;
 	}
-	int SetGrowSize(int val)
+	void SetGrowSize(int val)
 	{
 		assert(val >= 0);
 		m_growSize = val;
 	}
-	int SetSize(int val)
+	void SetSize(int val)
 	{
 		assert(val >= 0);
 		m_numElements = val;
 	}
-private:
+	void SetMaxSize(int val)
+	{
+		assert(val >= 0);
+		m_maxSize = val;
+	}
+protected:
 	bool Expand()
 	{
 		if (m_growSize <= 0)
@@ -113,11 +119,13 @@ private:
 		m_array = temp;
 		temp = nullptr;
 
-		m_maxSize *= pow(2, m_growSize);
+		m_maxSize += m_growSize;
+
+		m_growSize *= 2;
 
 		return true;
 	}
-private:
+protected:
 	// Private Variables
 	T* m_array;			// Pointer to the beginning of the array
 
@@ -130,13 +138,39 @@ template <class T>
 class OrderedArray : public Array<T>
 {
 public:
+	using Array<T>::m_array;
+	using Array<T>::m_maxSize;
+	using Array<T>::m_growSize;
+	using Array<T>::m_numElements;
+	using Array<T>::Expand;
+	//Constructor
+	OrderedArray(int size, int growBy = 1)
+	{
+		if (size)	// Is this a legal size for an array?
+		{
+			Array<int>::SetMaxSize(size);
+			m_array = new T[Array<int>::GetMaxSize()];		// Dynamically allocating an array to m_maxSize
+			memset(m_array, 0, sizeof(T) * Array<int>::GetMaxSize());	// Explicitly set 0 to all elements in the array
+
+			Array<int>::SetGrowSize((growBy > 0) ? growBy : 0);
+		}
+	}
+	// Destructor
+	~OrderedArray()
+	{
+		if (m_array != nullptr)
+		{
+			delete[] m_array;
+			m_array = nullptr;
+		}
+	}
 	void push(T val)
 	{
 		//	checks if val is already in the array 
 		//	if not then it pushing it into the array
-		if (val != binarySearch(val, 0, Array<int>::GetSize() - 1)) {
+		if (val != m_array[search(val)]) {
 
-			assert(T & operator() != nullptr);
+			assert(m_array != nullptr);
 
 			if (Array<int>::GetSize() >= Array<int>::GetMaxSize())
 			{
@@ -216,42 +250,64 @@ private:
 
 		return -1;
 	}
-	bool Expand()
-	{
-		if (Array<int>::GetGrowSize() <= 0)
-		{
-			// LEAVE!
-			return false;
-		}
-
-		// Create the new array
-		T* temp = new T[Array<int>::GetMaxSize() * pow(2, Array<int>::GetGrowSize())];
-		assert(temp != nullptr);
-
-		// Copy the contents of the original array into the new array
-		memcpy(temp, m_array, sizeof(T) * Array<int>::GetMaxSize());
-
-		// Delete the old array
-		delete[] m_array;
-
-		// Clean up variable assignments
-		m_array = temp;
-		temp = nullptr;
-
-		Array<int>::SetMaxSize(Array<int>::GetMaxSize() * pow(2, Array<int>::GetGrowSize()));
-
-		return true;
-	}
-	private:
-		// Private Variables
-		T* m_array;			// Pointer to the beginning of the array
-
+	//bool Expand()
+	//{
+	//	if (Array<int>::GetGrowSize() <= 0)
+	//	{
+	//		// LEAVE!
+	//		return false;
+	//	}
+	//
+	//	// Create the new array
+	//	T* temp = new T[Array<int>::GetMaxSize() * pow(2, Array<int>::GetGrowSize())];
+	//	assert(temp != nullptr);
+	//
+	//	// Copy the contents of the original array into the new array
+	//	memcpy(temp, m_array, sizeof(T) * Array<int>::GetMaxSize());
+	//
+	//	// Delete the old array
+	//	delete[] m_array;
+	//
+	//	// Clean up variable assignments
+	//	m_array = temp;
+	//	temp = nullptr;
+	//
+	//	Array<int>::SetMaxSize(Array<int>::GetMaxSize() * pow(2, Array<int>::GetGrowSize()));
+	//
+	//	return true;
+	//}
 };
 
 template <class T>
 class UnorderedArray : public Array <T>
 {
 public:
+	using Array<T>::m_array;
+	using Array<T>::m_maxSize;
+	using Array<T>::m_growSize;
+	using Array<T>::m_numElements;
+	using Array<T>::Expand;
+	//Constructor
+	UnorderedArray(int size, int growBy = 1)
+	{
+		if (size)	// Is this a legal size for an array?
+		{
+			Array<int>::SetMaxSize(size);
+			m_array = new T[Array<int>::GetMaxSize()];		// Dynamically allocating an array to m_maxSize
+			memset(m_array, 0, sizeof(T) * Array<int>::GetMaxSize());	// Explicitly set 0 to all elements in the array
+
+			Array<int>::SetGrowSize((growBy > 0) ? growBy : 0);
+		}
+	}
+	// Destructor
+	~UnorderedArray()
+	{
+		if (m_array != nullptr)
+		{
+			delete[] m_array;
+			m_array = nullptr;
+		}
+	}
 	// Searching
 	// Linear Search
 	int search(T val)
@@ -420,33 +476,30 @@ public:
 				m_array[tempLow + i] = tempArray[i];
 			}
 		}
-		bool Expand()
-	{
-		if (Array<int>::GetGrowSize() <= 0)
-		{
-			// LEAVE!
-			return false;
-		}
-
-		// Create the new array
-		T* temp = new T[Array<int>::GetMaxSize() * pow(2, Array<int>::GetGrowSize())];
-		assert(temp != nullptr);
-
-		// Copy the contents of the original array into the new array
-		memcpy(temp, m_array, sizeof(T) * Array<int>::GetMaxSize());
-
-		// Delete the old array
-		delete[] m_array;
-
-		// Clean up variable assignments
-		m_array = temp;
-		temp = nullptr;
-
-		Array<int>::SetMaxSize(Array<int>::GetMaxSize() * pow(2, Array<int>::GetGrowSize()));
-
-		return true;
-	}
-		private:
-			// Private Variables
-			T* m_array;			// Pointer to the beginning of the array
+		//bool Expand()
+		//{
+		//if (Array<int>::GetGrowSize() <= 0)
+		//{
+		//	// LEAVE!
+		//	return false;
+		//}
+		//
+		//// Create the new array
+		//T* temp = new T[Array<int>::GetMaxSize() * pow(2, Array<int>::GetGrowSize())];
+		//assert(temp != nullptr);
+		//
+		//// Copy the contents of the original array into the new array
+		//memcpy(temp, m_array, sizeof(T) * Array<int>::GetMaxSize());
+		//
+		//// Delete the old array
+		//delete[] m_array;
+		//
+		//// Clean up variable assignments
+		//m_array = temp;
+		//temp = nullptr;
+		//
+		//Array<int>::SetMaxSize(Array<int>::GetMaxSize() * pow(2, Array<int>::GetGrowSize()));
+		//
+		//return true;
+		//}
 };
